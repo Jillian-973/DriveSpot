@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DriveSpots | préparation des parcours de conduite</title>
+    <link
+      rel="stylesheet"
+      href="/vendor/leaflet/leaflet.css"
+    >
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <!-- Recherche principale : l'adresse choisie ou saisie alimente le même parcours. -->
+    <header class="hero">
+      <div class="hero-inner">
+        <img
+          class="brand-logo"
+          src="/assets/drivespots-logo.png"
+          alt="DriveSpots"
+          width="144"
+          height="96"
+        >
+
+        <div class="hero-search">
+          <form id="search-form">
+            <div class="address-field">
+              <label for="address">Adresse de départ</label>
+              <input
+                id="address"
+                name="address"
+                type="search"
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="suggestions"
+                aria-expanded="false"
+                placeholder="Ex. Place Bellecour, Lyon"
+                required
+              >
+              <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+            </div>
+            <button id="search-button" type="submit">Analyser la zone</button>
+          </form>
+          <p id="error-message" class="error" role="alert" hidden></p>
+        </div>
+      </div>
+    </header>
+
+    <!-- La carte reste la vue primaire ; le panneau latéral en résume les résultats. -->
+    <main>
+      <section class="workspace">
+        <div class="map-column">
+          <div class="map-card">
+            <div id="map" aria-label="Carte des aménagements routiers"></div>
+            <p class="map-note">
+              Cadre bleu : périmètre analysé · clusters ambre : concentrations d’aménagements
+            </p>
+          </div>
+
+          <section class="metrics" aria-label="Informations de recherche">
+            <div>
+              <span>Durée d’analyse</span>
+              <strong id="search-time">En attente</strong>
+            </div>
+            <div>
+              <span>Données cartographiques</span>
+              <strong id="data-source">OpenStreetMap</strong>
+            </div>
+            <div>
+              <span>Aménagements détectés</span>
+              <strong id="result-count">En attente</strong>
+            </div>
+          </section>
+        </div>
+
+        <aside class="results-panel" aria-labelledby="results-title">
+          <div class="results-heading">
+            <h2 id="results-title">Aménagements routiers</h2>
+          </div>
+          <div id="category-summary" class="category-summary">
+            <p class="empty-state">Lancez une recherche pour afficher les catégories.</p>
+          </div>
+          <div id="cluster-list" class="cluster-list"></div>
+        </aside>
+      </section>
+    </main>
+
+    <!-- Attribution requise pour les données et tuiles OpenStreetMap. -->
+    <footer>
+      <p>
+        Données © contributeurs
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
+          OpenStreetMap
+        </a>
+        · Tuiles © OpenStreetMap
+      </p>
+    </footer>
+
+    <script src="/vendor/leaflet/leaflet.js"></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
+
