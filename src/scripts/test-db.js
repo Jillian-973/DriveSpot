@@ -1,4 +1,5 @@
 import pool from '../db/connection.js'; 
+
 async function main() {
   try {
     const result = await pool.query('SELECT * FROM pois');
