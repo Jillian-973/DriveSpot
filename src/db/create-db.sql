@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS searches (
 );
 
 CREATE TABLE IF NOT EXISTS pois (
-    id SERIAL PRIMARY KEY,
+    PRIMARY KEY (osm_type, osm_id)
     osm_type VARCHAR(4) NOT NULL,
     osm_id BIGINT NOT NULL,
     name TEXT,
@@ -15,12 +15,15 @@ CREATE TABLE IF NOT EXISTS pois (
     latitude DOUBLE PRECISION NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
     source VARCHAR(255) NOT NULL,
-    tags JSON
+    tags JSONB,
 );
 
-CREATE TABLE IF NOT EXISTS search_pois(
+CREATE TABLE IF NOT EXISTS search_pois (
+    PRIMARY KEY (search_id, osm_type, osm_id),
     search_id INT NOT NULL REFERENCES searches(id) ON DELETE CASCADE,
-    poi_id INT NOT NULL REFERENCES pois(id) ON DELETE CASCADE
+    osm_type VARCHAR(4) NOT NULL,
+    osm_id BIGINT NOT NULL,
+    FOREIGN KEY (osm_type, osm_id) REFERENCES pois(osm_type, osm_id) ON DELETE CASCADE
 );
 
 INSERT INTO pois (osm_type, osm_id, name, category, category_label, latitude, longitude, source, tags)
